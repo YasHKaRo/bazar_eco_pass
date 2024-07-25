@@ -20,3 +20,12 @@ echo \
 sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Clone
+git clone https://github.com/YasHKaRo/bazar_eco_pass.git
+
+# Build docker image
+docker build . --tag bazar_eco_pass
+
+# Start
+docker run -p 80:8000 bazar_eco_pass
