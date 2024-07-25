@@ -1,0 +1,8 @@
+venv
+.venv
+passw.db
+russian.txt
+repository.py
+my_key
+my_key.pub
+.idea

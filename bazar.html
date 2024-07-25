@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passwords</title>
+    <style>
+        body {
+          background-image: url("16cefc978149f97d681ba913195dce5a.jpg");
+          background-size: cover;
+        }
+
+        .container {
+          display: flex;
+          justify-content: space-around;
+          z-index: 1;
+        }
+
+        .column_passw {
+          width: 20%;
+          height: 200px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          padding: 20px;
+          margin: 10px;
+          border: 2px solid orange;
+          text-align: center;
+        }
+
+        .column {
+          width: 20%;
+          padding: 10px;
+          margin: 10px;
+          padding-top: -20px;
+          border: 1px solid red;
+          text-align: center;
+        }
+
+        .centered-heading {
+            color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+
+        input[type=text] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+        }
+
+        button {
+          background-color: #4CAF50;
+          color: white;
+          padding: 7px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+        }
+
+        button:hover {
+          opacity: 0.8;
+        }
+        .table-container {
+        display: table;
+        width: 100%;
+        }
+
+        table {
+         display: table-row-group;
+        }
+
+        .table-text {
+         display: table-cell;
+         vertical-align: middle;
+         padding-left: 1em;
+        }
+
+    </style>
+</head>
+<body>
+<div id="message"></div>
+<div class="container">
+    <div class="column_passw">
+        <h3 class="centered-heading">Рядовой пароль</h3>
+        <input name="basic_pass" id="basic_pass" type="text" placeholder="Введите пароль">
+        <button type="submit" onclick="send_basic()">Отправить</button>
+        <button type="submit" data-target="basic_pass" onclick="random()">Сгенерировать</button>
+    </div>
+    <div class="column_passw">
+        <h3 class="centered-heading">Ништяковый пароль</h3>
+        <input name="cool_pass" id="cool_pass" type="text" placeholder="Введите пароль">
+        <button type="submit" onclick="send_cool()">Отправить</button>
+        <button type="submit" data-target="cool_pass" onclick="random()">Сгенерировать</button>
+    </div>
+    <div class="column_passw">
+        <h3 class="centered-heading">Пароль выходного дня</h3>
+        <input name="weekend_pass" id="weekend_pass" type="text" placeholder="Введите пароль">
+        <button type="submit" onclick="send_weekend()">Отправить</button>
+        <button type="submit" data-target="weekend_pass" onclick="random()">Сгенерировать</button>
+    </div>
+    <div class="column_passw">
+        <h3 class="centered-heading">Универсальный пароль</h3>
+        <input name="special_pass" id="special_pass" type="text" placeholder="Введите пароль">
+        <button type="submit" onclick="send_special()">Отправить</button>
+        <button type="submit" data-target="special_pass" onclick="random()">Сгенерировать</button>
+    </div>
+</div>
+<div class="column">
+    <h3 class="centered-heading">Bazar EcoSystem</h3>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Названия строк</th>
+            <th>ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Рядовой пароль</td>
+            <td><input type="text" id="row1" readonly></td>
+        </tr>
+        <tr>
+            <td>Ништяковый пароль</td>
+            <td><input type="text" id="row2" readonly></td>
+        </tr>
+        <tr>
+            <td>Пароль выходного дня</td>
+            <td><input type="text" id="row3" readonly></td>
+        </tr>
+        <tr>
+            <td>Универсальный пароль</td>
+            <td><input type="text" id="row4" readonly></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="table-text" id="password_list"></div>
+</div>
+<script>
+    async function send_basic(){
+        const basic_pass = document.getElementById("basic_pass").value;
+        const response = await fetch("/pass_system", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                password: basic_pass,
+                rating: "basic"
+            })
+        });
+        if (response.ok) {
+             const data = await response.json();
+             document.getElementById("row1").value = data.password;
+        }
+        else
+             console.log(response);
+    }
+    async function send_cool(){
+        const cool_pass = document.getElementById("cool_pass").value;
+        const response = await fetch("/pass_system", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                password: cool_pass,
+                rating: "cool"
+            })
+        });
+        if (response.ok) {
+             const data = await response.json();
+             document.getElementById("row2").value = data.password;
+        }
+        else
+             console.log(response);
+    }
+    async function send_weekend(){
+        const weekend_pass = document.getElementById("weekend_pass").value;
+        const response = await fetch("/pass_system", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                password: weekend_pass,
+                rating: "weekend"
+            })
+        });
+        if (response.ok) {
+             const data = await response.json();
+             document.getElementById("row3").value = data.password;
+        }
+        else
+             console.log(response);
+    }
+    async function send_special(){
+        const special_pass = document.getElementById("special_pass").value;
+        const response = await fetch("/pass_system", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                password: special_pass,
+                rating: "special"
+            })
+        });
+        if (response.ok) {
+             const data = await response.json();
+             document.getElementById("row4").value = data.password;
+        }
+        else
+             console.log(response);
+    }
+    async function random(event) {
+    // Получаем целевой элемент HTML из атрибута data-target
+        const target = event.target.dataset.target;
+
+         const response = await fetch("/random", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                react: 1
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById(target).value = data.password;
+        } else {
+            console.log(response);
+        }
+    }
+
+// Добавляем обработчик событий для обеих кнопок
+document.querySelectorAll("button").forEach(button => {
+  button.addEventListener("click", random);
+});
+</script>
+</body>
+</html>
